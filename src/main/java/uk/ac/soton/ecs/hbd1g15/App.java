@@ -16,21 +16,19 @@ import java.net.*;
 public class App {
     public static void main( String[] args ) {
 
-        // Load in imagae as an array of floats
-        MBFImage image = ImageUtilities.readMBF(new URL("http://static.openimaj.org/media/tutorial/sinaface.jpg"));
-        
-        // Display loaded image and red channel
-        DisplayUtilities.display(image);
-        DisplayUtilities.display(image.getBand(0), "Red Channel");
-        MBFImage clone = image.clone();
+        //Create an image
+        MBFImage image = new MBFImage(320,70, ColourSpace.RGB);
 
-        // Go through each pixel and set all blue and green pixels to black
-        for (int y=0; y<image.getHeight(); y++) {
-            for(int x=0; x<image.getWidth(); x++) {
-                clone.getBand(1).pixels[y][x] = 0;
-                clone.getBand(2).pixels[y][x] = 0;
-            }
-        }
-        DisplayUtilities.display(clone);
+        //Fill the image with white
+        image.fill(RGBColour.WHITE);
+        		        
+        //Render some test into the image
+        image.drawText("Hello World", 10, 60, HersheyFont.CURSIVE, 50, RGBColour.BLACK);
+
+        //Apply a Gaussian blur
+        image.processInplace(new FGaussianConvolve(2f));
+        
+        //Display the image
+        DisplayUtilities.display(image);
     }
 }
