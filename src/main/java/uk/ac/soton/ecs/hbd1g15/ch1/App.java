@@ -15,13 +15,14 @@ public class App {
     public static void main( String[] args ) {
 
         //Create an image
-        MBFImage image = new MBFImage(320,70, ColourSpace.RGB);
+        MBFImage image = new MBFImage(1200,140, ColourSpace.RGB);
 
         //Fill the image with white
         image.fill(RGBColour.WHITE);
         		        
         //Render some test into the image
-        image.drawText("Hello World", 10, 60, HersheyFont.CURSIVE, 50, RGBColour.BLACK);
+        image.drawText("I was going to read something of Shakespeare's", 10, 60, HersheyFont.GOTHIC_ENGLISH, 50, RGBColour.RED);
+        image.drawText("but he never reads anything of mine", 10, 120, HersheyFont.GOTHIC_ENGLISH, 50, RGBColour.RED);
 
         //Apply a Gaussian blur
         image.processInplace(new FGaussianConvolve(2f));
