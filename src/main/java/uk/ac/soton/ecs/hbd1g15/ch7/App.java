@@ -4,12 +4,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.openimaj.image.MBFImage;
-import org.openimaj.image.processing.edges.CannyEdgeDetector;
+import org.openimaj.image.processing.edges.SUSANEdgeDetector;
 import org.openimaj.video.Video;
 import org.openimaj.video.VideoDisplay;
 import org.openimaj.video.VideoDisplayListener;
 import org.openimaj.video.xuggle.XuggleVideo;
 
+/**
+ * OpenIMAJ Processing Video
+ *
+ */
 public class App {
 	public static void main(String[] args) {
 		try {
@@ -21,7 +25,11 @@ public class App {
 			display.addVideoListener(
 			  new VideoDisplayListener<MBFImage>() {
 			    public void beforeUpdate(MBFImage frame) {
-			        frame.processInplace(new CannyEdgeDetector());
+			        //frame.processInplace(new CannyEdgeDetector());
+
+					// Exercise 1- different processing operation
+			        frame.processInplace(new SUSANEdgeDetector());
+			        // Slightly slower with larger edge detection highlighted
 			    }
 
 			    public void afterUpdate(VideoDisplay<MBFImage> display) {
