@@ -34,12 +34,14 @@ public class App {
     		MBFImage clone = image.clone();
     		clone.getBand(1).fill(0f);
     		clone.getBand(2).fill(0f);
+    		// Exercise 1- Display all images in a named frame
     		DisplayUtilities.displayName(clone, "frame");
     		
     		// Run the Canny Edge Detection Algorithm on the image
     		DisplayUtilities.displayName(image.processInplace(new CannyEdgeDetector()), "frame");
     		
-    		// Draw a speach bubble on the image
+    		// Draw a speech bubble on the image
+    		// Exercise 2- Add speech bubble to image
     		image.drawShapeFilled(new Ellipse(700f, 450f, 20f, 10f, 0f), RGBColour.WHITE);
     		image.drawShape(new Ellipse(700f, 450f, 20f, 10f, 0f), 10, RGBColour.RED);
     		image.drawShapeFilled(new Ellipse(650f, 425f, 25f, 12f, 0f), RGBColour.WHITE);
@@ -55,7 +57,5 @@ public class App {
 			// URL not found
 			e.printStackTrace();
 		}
-    	
-    	
     }
 }
