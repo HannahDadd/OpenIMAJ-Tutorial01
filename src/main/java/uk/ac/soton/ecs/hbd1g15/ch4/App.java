@@ -47,7 +47,7 @@ public class App {
 			for( int i = 0; i < histograms.size(); i++ ) {
 			    for( int j = i; j < histograms.size(); j++ ) {
 			    	// Compare all histograms to each other using Euclidean distance measure
-			        double distance = histograms.get(i).compare( histograms.get(j), DoubleFVComparison.EUCLIDEAN );
+			        double distance = histograms.get(i).compare( histograms.get(j), DoubleFVComparison.INTERSECTION );
 			        
 			        // If their is less distance between them they are more similar
 			        if(distance<leastDistance) {
@@ -59,6 +59,9 @@ public class App {
 			}
 			DisplayUtilities.display(ImageUtilities.readMBF(imageURLs[0]));
 			DisplayUtilities.display(ImageUtilities.readMBF(imageURLs[1]));
+			
+			// Excerice 2- When a different comparison method is used, such as intersection
+			// I found that the same images were found for most similar
     	} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
