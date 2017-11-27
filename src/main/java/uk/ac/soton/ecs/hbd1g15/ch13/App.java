@@ -20,6 +20,10 @@ import org.openimaj.image.FImage;
 import org.openimaj.image.ImageUtilities;
 import org.openimaj.image.model.EigenImages;
 
+/**
+ * OpenIMAJ Face recognition 101: Eigenfaces
+ *
+ */
 public class App {
 	public static void main(String[] args) {
 		try {
