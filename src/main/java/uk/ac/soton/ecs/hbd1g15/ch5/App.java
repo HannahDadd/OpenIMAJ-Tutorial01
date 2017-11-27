@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.openimaj.feature.local.list.LocalFeatureList;
-import org.openimaj.feature.local.matcher.BasicMatcher;
+import org.openimaj.feature.local.matcher.BasicTwoWayMatcher;
 import org.openimaj.feature.local.matcher.FastBasicKeypointMatcher;
 import org.openimaj.feature.local.matcher.LocalFeatureMatcher;
 import org.openimaj.feature.local.matcher.MatchingUtilities;
@@ -15,7 +15,9 @@ import org.openimaj.image.MBFImage;
 import org.openimaj.image.colour.RGBColour;
 import org.openimaj.image.feature.local.engine.DoGSIFTEngine;
 import org.openimaj.image.feature.local.keypoints.Keypoint;
+import org.openimaj.math.geometry.transforms.HomographyRefinement;
 import org.openimaj.math.geometry.transforms.estimation.RobustAffineTransformEstimator;
+import org.openimaj.math.geometry.transforms.estimation.RobustHomographyEstimator;
 import org.openimaj.math.model.fit.RANSAC;
 
 /**
@@ -35,7 +37,8 @@ public class App {
 			LocalFeatureList<Keypoint> targetKeypoints = engine.findFeatures(target.flatten());
 
 			// Take a given keypoint and find closest keypoint to find which keypoints match
-			LocalFeatureMatcher<Keypoint> matcher = new BasicMatcher<Keypoint>(80);
+			// Exercise 1- using the BasicTwoWayMatcher instead of the BasicMatcher with param 80
+			LocalFeatureMatcher<Keypoint> matcher = new BasicTwoWayMatcher<Keypoint>();
 			matcher.setModelFeatures(queryKeypoints);
 			matcher.findMatches(targetKeypoints);
 
@@ -44,8 +47,9 @@ public class App {
 			DisplayUtilities.display(basicMatches);
 
 			// Use RANSAC to find Affine Transforms
-			RobustAffineTransformEstimator modelFitter = new RobustAffineTransformEstimator(5.0, 1500,
-					new RANSAC.PercentageInliersStoppingCondition(0.5));
+			// Exercise 2- Use HomographyModel in consistent matcher
+			RobustHomographyEstimator modelFitter = new RobustHomographyEstimator(5.0, 1500,
+					new RANSAC.PercentageInliersStoppingCondition(0.5), HomographyRefinement.NONE);
 			matcher = new ConsistentLocalFeatureMatcher2d<Keypoint>(new FastBasicKeypointMatcher<Keypoint>(8),
 					modelFitter);
 			matcher.setModelFeatures(queryKeypoints);
@@ -54,7 +58,7 @@ public class App {
 					RGBColour.RED);
 			DisplayUtilities.display(consistentMatches);
 
-			// Draw polygon around where red lines are centred for quesry result
+			// Draw polygon around where red lines are centred for query result
 			target.drawShape(query.getBounds().transform(modelFitter.getModel().getTransform().inverse()), 3,
 					RGBColour.BLUE);
 			DisplayUtilities.display(target);
