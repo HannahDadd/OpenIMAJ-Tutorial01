@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openimaj.feature.DoubleFVComparison;
+import org.openimaj.image.DisplayUtilities;
 import org.openimaj.image.ImageUtilities;
 import org.openimaj.image.pixel.statistics.HistogramModel;
 import org.openimaj.math.statistics.distribution.MultidimensionalHistogram;
@@ -38,13 +39,26 @@ public class App {
 			    histograms.add(model.histogram.clone());
 			}
 			
+			// Exercise 1- find the most similar histograms
+			int[] mostSimilar = new int[2];
+			double leastDistance = 100000;
+			
 			// Compare all the histograms to each other
 			for( int i = 0; i < histograms.size(); i++ ) {
 			    for( int j = i; j < histograms.size(); j++ ) {
 			    	// Compare all histograms to each other using Euclidean distance measure
 			        double distance = histograms.get(i).compare( histograms.get(j), DoubleFVComparison.EUCLIDEAN );
+			        
+			        // If their is less distance between them they are more similar
+			        if(distance<leastDistance) {
+			        	leastDistance = distance;
+			        	mostSimilar[0] = i;
+			        	mostSimilar[1] = j;
+			        }
 			    }
 			}
+			DisplayUtilities.display(ImageUtilities.readMBF(imageURLs[0]));
+			DisplayUtilities.display(ImageUtilities.readMBF(imageURLs[1]));
     	} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
