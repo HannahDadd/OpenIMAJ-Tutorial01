@@ -21,6 +21,7 @@ public class App {
         image.fill(RGBColour.WHITE);
         		        
         //Render some test into the image
+        // Exercise 1- Different font and different colour
         image.drawText("I was going to read something of Shakespeare's", 10, 60, HersheyFont.GOTHIC_ENGLISH, 50, RGBColour.RED);
         image.drawText("but he never reads anything of mine", 10, 120, HersheyFont.GOTHIC_ENGLISH, 50, RGBColour.RED);
 
