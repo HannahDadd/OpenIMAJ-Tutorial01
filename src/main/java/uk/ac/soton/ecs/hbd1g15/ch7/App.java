@@ -28,8 +28,8 @@ public class App {
 			        //frame.processInplace(new CannyEdgeDetector());
 
 					// Exercise 1- different processing operation
-			        frame.processInplace(new SUSANEdgeDetector());
 			        // Slightly slower with larger edge detection highlighted
+			        frame.processInplace(new SUSANEdgeDetector());
 			    }
 
 			    public void afterUpdate(VideoDisplay<MBFImage> display) {
